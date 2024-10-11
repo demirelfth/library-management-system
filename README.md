@@ -10,7 +10,6 @@ A simple library management system that allows library staff to manage users, bo
 - [API Endpoints](#api-endpoints)
 - [Usage](#usage)
 - [Folder Structure](#folder-structure)
-- [Known Issues](#known-issues)
 - [License](#license)
 
 
