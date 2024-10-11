@@ -125,11 +125,6 @@ library-management-system/
     - Database connection failures
 - **UI Improvements**: Future improvements could include better pagination for larger lists of users and books.
 
-## Future Improvements
-- **Authentication**: Adding role-based authentication (e.g., using JWT) would allow staff members to log in securely.
-- **Pagination**: Implement pagination for large datasets in the user and book lists to improve performance and usability.
-- **Search & Filter**: Add a search and filter feature to quickly find books or users by name, author, etc.
-- **Notifications**: Implement a notification system to remind staff members of overdue books.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/demirelfth/library-management-system?tab=MIT-1-ov-file) file for details.
