@@ -61,15 +61,16 @@ A simple library management system that allows library staff to manage users, bo
     npm install --force
 
     # For the frontend
-    cd ../frontend
+    cd frontend
     npm install
     ```
 
 3. Set up the database:
     - Ensure you have PostgreSQL installed and running.
     - Create the database:
-      ```sql
-      CREATE DATABASE library_management_system;
+      ```bash
+        cd backend/config
+        node createDatabase.js
       ```
     - Apply the DDL script to create the necessary tables (found in `backend/database/ddl.sql`).
 
