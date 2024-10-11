@@ -2,6 +2,18 @@
 
 A simple library management system that allows library staff to manage users, books, and borrowing operations. This project is built using **React.js** for the frontend, **Node.js** with **Express.js** for the backend, and a relational database **PostgreSQL**. 
 
+
+## Table of Contents
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Installation](#installation)
+- [API Endpoints](#api-endpoints)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
+- [Known Issues](#known-issues)
+- [License](#license)
+
+
 ## Features
 
 - Existing users should be listed in a grid. This grid will display all registered users.
