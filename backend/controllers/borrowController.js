@@ -1,72 +1,87 @@
-const { Book, User, Borrow } = require('../models');
+const { Book, User, Borrow, Rating } = require('../models');
 
 exports.borrowBook = async (req, res) => {
-  const { portfolioId, shareSymbol, quantity } = req.body;
 
-  try {
-    const portfolio = await Portfolio.findByPk(portfolioId);
-    if (!portfolio) {
-      return res.status(400).json({ message: 'Portfolio not found' });
+  try{
+    const user_id = req.params.user_id;
+    const book_id = req.params.book_id;
+
+    const user = await User.findByPk(user_id);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
     }
 
-    const share = await Share.findOne({ where: { symbol: shareSymbol } });
-    if (!share) {
-      return res.status(400).json({ message: 'Share not found' });
+    const book = await Book.findByPk(book_id);
+    if (!book) {
+      return res.status(400).json({ message: 'Book not found' });
     }
 
-    const transaction = await Transaction.create({
-      type: 'BUY',
-      quantity,
-      sharePrice: share.price,
-      PortfolioId: portfolio.id,
-      ShareId: share.id,
+    const existingBorrow = await Borrow.findOne({
+      where: {
+        BookId: book_id,
+        return_date: ""
+      }
     });
 
-    res.status(201).json(transaction);
+    if (existingBorrow) {
+      return res.status(400).json({ message: 'Book is already borrowed' });
+    }
+
+    const borrow = await Borrow.create({
+      UserId: user_id,
+      BookId: book_id,
+      borrow_date: (new Date()).toString(),
+      return_date: ""
+    });
+
+    return res.status(200).json({ message: 'Book borrowed successfully', borrow });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 exports.returnBook = async (req, res) => {
-  const { portfolioId, shareSymbol, quantity } = req.body;
 
   try {
-    const portfolio = await Portfolio.findByPk(portfolioId);
-    if (!portfolio) {
-      return res.status(400).json({ message: 'Portfolio not found' });
+    const user_id = req.params.user_id;
+    const book_id = req.params.book_id;
+    const { score } = req.body;
+
+    const user = await User.findByPk(user_id);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
     }
 
-    const share = await Share.findOne({ where: { symbol: shareSymbol } });
-    if (!share) {
-      return res.status(400).json({ message: 'Share not found' });
+    const book = await Book.findByPk(book_id);
+    if (!book) {
+      return res.status(400).json({ message: 'Book not found' });
     }
 
-    const transactions = await Transaction.findAll({
-      where: { PortfolioId: portfolio.id, ShareId: share.id },
+    const existingBorrow = await Borrow.findOne({
+      where: {
+        BookId: book_id,
+        UserId: user_id,
+        return_date: ""
+      }
     });
 
-    const totalBought = transactions
-      .filter(t => t.type === 'BUY')
-      .reduce((sum, t) => sum + t.quantity, 0);
-    const totalSold = transactions
-      .filter(t => t.type === 'SELL')
-      .reduce((sum, t) => sum + t.quantity, 0);
-    const availableQuantity = totalBought - totalSold;
-
-    if (availableQuantity < quantity) {
-      return res.status(400).json({ message: 'Insufficient shares to sell' });
+    if (!existingBorrow) {
+      return res.status(400).json({ message: 'No active borrow record found for this book' });
     }
 
-    const transaction = await Transaction.create({
-      type: 'SELL',
-      quantity,
-      sharePrice: share.price,
-      PortfolioId: portfolio.id,
-      ShareId: share.id,
-    });
+    existingBorrow.return_date = (new Date()).toString();
+    await existingBorrow.save();
 
-    res.status(201).json(transaction);
+    if (score) {
+      const rating = await Rating.create({
+        UserId: user_id,
+        BookId: book_id,
+        quantity: score
+      });
+      console.log(`Rating added for user ${user_id} for book ${book_id} with score ${score}`);
+    }
+
+    return res.status(200).json({ message: 'Book returned successfully', borrow: existingBorrow });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

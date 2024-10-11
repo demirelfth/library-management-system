@@ -1,70 +1,29 @@
-const { Book, Borrow } = require('../models');
+const { Book } = require('../models');
 
 exports.getBooks = async (req, res) => {
-  try {
-    const borrowedBooks = await Borrow.findAll({
-        attributes: ['bookId']
-    });
-    
-    const borrowedBookIds = borrowedBooks.map(borrow => borrow.bookId);
-    
-    const availableBooks = await Book.findAll({
-        where: {
-            [Op.or]: [
-                { id: { [Op.notIn]: borrowedBookIds } },
-                { return_date: { [Op.isNot]: null } }
-            ]
+
+    try {
+        const books = await Book.findAll();
+        if (!books) {
+            return res.status(400).json({ message: 'No available books found' });
         }
-    });
-    
-    if (availableBooks.length === 0) {
-        return res.status(400).json({ message: 'No available books found' });
+        
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    
-    res.status(200).json(availableBooks);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 };
 
 exports.getBook = async (req, res) => {
-    const book_id = req.headers['book_id'];
+    const book_id = req.params.book_id;
 
     try {
-        const borrowedBooks = await Borrow.findAll({
-            attributes: ['bookId']
-        });
-        
-        const borrowedBookIds = borrowedBooks.map(borrow => borrow.bookId);
-
-        const availableBooks = await Book.findAll({
-            where: {
-                [Op.or]: [
-                    { id: { [Op.notIn]: borrowedBookIds, [Op.eq]: book_id }},
-                    { return_date: { [Op.isNot]: null }}
-                ]
-            }
-        });
-
-        const lendedBooks = await Book.findAll({
-            where: {
-                [Op.or]: [
-                    { id: { [Op.in]: borrowedBookIds, [Op.eq]: book_id, return_date: { [Op.is]: null }}},
-                ]
-            }
-        });
-        
-        if (availableBooks.length === 0) {
-            res.status(200).json({
-                message: "Lended books found.",
-                lendedBooks
-            });
-        }else{
-            res.status(200).json({
-                message: "Available books found.",
-                availableBooks
-            });
+        const book = await Book.findByPk(book_id);
+        if (!book) {
+            return res.status(400).json({ message: 'Book not found' });
         }
+        
+        res.status(200).json(book);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

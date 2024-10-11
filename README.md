@@ -72,27 +72,25 @@ A simple library management system that allows library staff to manage users, bo
         cd backend/config
         node createDatabase.js
       ```
-    - Apply the DDL script to create the necessary tables (found in `backend/database/ddl.sql`).
-
-4. Set up environment variables:
-    - Create a `.env` file in the `backend` directory with the following variables:
-      ```
-      DATABASE_URL=postgresql://username:password@localhost:5432/library_management_system
+    - Create data for database:
+      ```bash
+        cd backend/config
+        node init_db.js
       ```
 
-5. Start the backend server:
+4. Start the backend server:
     ```bash
     cd backend
-    npm run dev
+    node app.js
     ```
 
-6. Start the frontend application:
+5. Start the frontend application:
     ```bash
-    cd ../frontend
+    cd frontend
     npm start
     ```
 
-7. Open the app in your browser at `http://localhost:3000`.
+7. Open the app in your browser at `http://localhost:3200`.
 
 ## API Endpoints
 
@@ -105,7 +103,6 @@ A simple library management system that allows library staff to manage users, bo
 | `POST` | `/users/2/borrow/4`       | Borrow a book to a user               |
 | `POST` | `/users/2/return/5`       | Return a borrowed book                |
 
-For more details, refer to the [Postman collection](./path-to-postman-collection).
 
 ## Usage
 
@@ -117,10 +114,12 @@ For more details, refer to the [Postman collection](./path-to-postman-collection
 ```bash
 library-management-system/
 │
-├── backend/               # Backend code (Express.js API)
-│   ├── src/               # Main source code
-│   ├── database/          # DDL script for database creation
-│   └── .env.example       # Sample environment file
+├── backend/               # Backend codebase (Express.js, API)
+│   ├── config/            # Configuration files for database connection and initialization
+│   ├── controllers/       # Controller functions for handling request and responses
+│   ├── models/            # ORM models for database schema (using Sequelize)
+│   ├── routes/            # API route definitions and endpoint handlers
+│   └── app.js             # Main application entry point and server setup
 │
 ├── frontend/              # Frontend code (React.js)
 │   ├── src/               # Main source code
@@ -129,14 +128,6 @@ library-management-system/
 │
 └── README.md              # Project instructions
 ```
-
-## Known Issues
-- **Authentication**: There is no authentication or authorization mechanism in place. The application assumes all operations are performed by authorized staff.
-- **Error Handling**: Ensure comprehensive error handling for common cases like:
-    - Book already borrowed
-    - Book return attempts when no book is borrowed
-    - Database connection failures
-- **UI Improvements**: Future improvements could include better pagination for larger lists of users and books.
 
 
 ## License
