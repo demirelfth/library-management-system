@@ -13,4 +13,7 @@ router.get('/users/:user_id', userController.getUser);
 router.post('/users/:user_id/borrow/:book_id', borrowController.borrowBook);
 router.post('/users/:user_id/return/:book_id', borrowController.returnBook);
 
+router.get('/borrowed/user/:user_id', borrowController.borrowedBooks);
+router.get('/borrowed/book/:book_id', borrowController.borrowedBook);
+
 module.exports = router;

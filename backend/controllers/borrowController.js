@@ -86,3 +86,57 @@ exports.returnBook = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.borrowedBooks = async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+
+    const user = await User.findByPk(user_id);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    const borrowedBooks = await Borrow.findAll({
+      where: { UserId: user_id }
+    });
+
+    if (!borrowedBooks || borrowedBooks.length === 0) {
+      return res.status(400).json({ message: 'No borrowed books found for this user' });
+    }
+
+    return res.status(200).json({ message: 'Borrowed books retrieved successfully', books: borrowedBooks });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.borrowedBook = async (req, res) => {
+  try {
+    const book_id = req.params.book_id;
+
+    const book = await Book.findByPk(book_id);
+    if (!book) {
+      return res.status(400).json({ message: 'Book not found' });
+    }
+
+    const activeBorrow = await Borrow.findOne({
+      where: { BookId: book_id, return_date: "" }
+    });
+
+    if (!activeBorrow) {
+      return res.status(200).json({ message: 'The book is available and not currently borrowed' });
+    }
+
+    const user = await User.findByPk(activeBorrow.UserId);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({
+      message: 'The book is currently borrowed',
+      borrowedBy: user
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

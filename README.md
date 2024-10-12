@@ -100,6 +100,8 @@ A simple library management system that allows library staff to manage users, bo
 | `GET`  | `/books/2`                | Get details of a specific book        |
 | `POST` | `/users/2/borrow/4`       | Borrow a book to a user               |
 | `POST` | `/users/2/return/5`       | Return a borrowed book                |
+| `GET`  | `/borrowed/user/2`        | Get list of borrowed books for a user |
+| `GET`  | `/borrowed/book/2`        | Get status of book with details       |
 
 
 ## Usage
@@ -120,7 +122,7 @@ library-management-system/
 │   └── app.js             # Main application entry point and server setup
 │
 ├── frontend/              # Frontend codebase (React.js)
-│   ├── src/               # Main source code
+│   └── src/               # Main source code
 │       ├── api/           # API request and service-related functions
 │       ├── components/    # Reusable UI components and elements
 │       ├── pages/         # Individual pages in the application
