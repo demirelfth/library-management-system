@@ -1,9 +1,12 @@
 import React from 'react';
+import BookDetail from '../components/Book/BookDetail';
+import '../styles/pages/BookDetailPage.scss';
 
 const Home = () => {
+
   return (
-    <div>
-      <p>This is the book detail page.</p>
+    <div className='container'>
+      <BookDetail />
     </div>
   );
 };

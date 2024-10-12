@@ -7,11 +7,3 @@ export const fetchBooks = async () => {
   }
   return await response.json();
 };
-
-export const fetchBookById = async (id: number) => {
-  const response = await fetch(`${API_URL}/books/${id}`);
-  if (!response.ok) {
-    throw new Error(`Error with getting book with id ${id}`);
-  }
-  return await response.json();
-};

@@ -7,3 +7,11 @@ export const fetchUsers = async () => {
   }
   return await response.json();
 };
+
+export const fetchUserById = async (id: number) => {
+  const response = await fetch(`${API_URL}/users/${id}`);
+  if (!response.ok) {
+    throw new Error(`Error with getting user with id ${id}`);
+  }
+  return await response.json();
+};

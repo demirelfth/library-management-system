@@ -35,7 +35,6 @@ A simple library management system that allows library staff to manage users, bo
 - **ORM**: Sequelize
 - **Version Control**: Git
 - **Styling**: SCSS (Bonus), UI libraries like Bootstrap/Material UI
-- **State Management**: Redux (Bonus)
   
 ## Installation
 

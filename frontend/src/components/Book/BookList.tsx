@@ -43,7 +43,7 @@ const HomeBookList = () => {
         <ul>
           {books.slice(0, 5).map((book) => (
             <Link to={`/books/${book.id}`} style={{ textDecoration: 'none', color: '#000' }}>
-              <li key={book.id}>
+              <li>
                     {book.title}, <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{book.author}</span>
               </li>
             </Link>
