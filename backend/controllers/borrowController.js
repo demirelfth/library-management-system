@@ -104,7 +104,22 @@ exports.borrowedBooks = async (req, res) => {
       return res.status(400).json({ message: 'No borrowed books found for this user' });
     }
 
-    return res.status(200).json({ message: 'Borrowed books retrieved successfully', books: borrowedBooks });
+    const books = await Promise.all(borrowedBooks.map(async (borrow) => {
+      const book = await Book.findByPk(borrow.BookId);
+      return book;
+    }));
+
+    const ratings = await Promise.all(borrowedBooks.map(async (borrow) => {
+      const rating = await Rating.findOne({
+        where: {
+          UserId: user_id,
+          BookId: borrow.BookId
+        }
+      });
+      return rating;
+    }));
+
+    return res.status(200).json({ message: 'Borrowed books retrieved successfully', borrows: borrowedBooks, books: books, ratings: ratings});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
