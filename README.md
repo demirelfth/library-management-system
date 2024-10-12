@@ -41,7 +41,7 @@ A simple library management system that allows library staff to manage users, bo
 
 ### Prerequisites
 - Node.js (>= 14.x)
-- PostgreSQL or any other relational database
+- PostgreSQL
 - Git
 
 ### Setup
@@ -61,7 +61,7 @@ A simple library management system that allows library staff to manage users, bo
 
     # For the frontend
     cd frontend
-    npm install
+    npm install --force
     ```
 
 3. Set up the database:
@@ -120,10 +120,14 @@ library-management-system/
 │   ├── routes/            # API route definitions and endpoint handlers
 │   └── app.js             # Main application entry point and server setup
 │
-├── frontend/              # Frontend code (React.js)
+├── frontend/              # Frontend codebase (React.js)
 │   ├── src/               # Main source code
-│   ├── public/            # Public assets
-│   └── .env.example       # Sample environment file
+│       ├── api/           # API request and service-related functions
+│       ├── components/    # Reusable UI components and elements
+│       ├── pages/         # Individual pages in the application
+│       └── styles/        # Global and component-specific styling (SCSS)
+│   ├── public/            # Static files and public assets
+│   └── App component      # Main application component (entry point of the app)
 │
 └── README.md              # Project instructions
 ```
