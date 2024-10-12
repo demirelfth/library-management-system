@@ -38,9 +38,8 @@ const HomeUserList = () => {
   
     return (
       <div className='user-list'>
-        <Link to="/users" style={{ textDecoration: 'none', color: '#000' }}><h2>User List</h2></Link>
         <ul>
-          {users.slice(0, 5).map((user) => (
+          {users.map((user) => (
             <Link to={`/users/${user.id}`} style={{ textDecoration: 'none', color: '#000' }}>
               <li key={user.id}>
                     {user.name} (<span style={{ fontSize: '0.8em', color: '#666' }}>{user.email.toLowerCase()}</span>)

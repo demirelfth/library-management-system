@@ -1,5 +1,9 @@
-// import axios from 'axios';
+const API_URL = 'http://localhost:3000';
 
-// // API işlemleri burada yapılır.
-
-export {};
+export const fetchUsers = async () => {
+  const response = await fetch(`${API_URL}/users`);
+  if (!response.ok) {
+    throw new Error('Error with getting users');
+  }
+  return await response.json();
+};

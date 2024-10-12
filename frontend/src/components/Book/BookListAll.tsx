@@ -39,9 +39,8 @@ const HomeBookList = () => {
   
     return (
       <div>
-        <Link to="/books" style={{ textDecoration: 'none', color: '#000' }}><h2>Book List</h2></Link>
         <ul>
-          {books.slice(0, 5).map((book) => (
+          {books.map((book) => (
             <Link to={`/books/${book.id}`} style={{ textDecoration: 'none', color: '#000' }}>
               <li key={book.id}>
                     {book.title}, <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>{book.author}</span>

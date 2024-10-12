@@ -1,0 +1,29 @@
+.loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Sayfanın tamamını kaplar */
+    background-color: rgba(255, 255, 255, 0.9); /* Beyaz arka plan, sayfa yüklenirken */
+    position: relative;
+
+    p {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        color: #333; /* Metin rengi */
+    }
+}
+
+.loader-spinner {
+    border: 8px solid #f3f3f3; /* Dış çember rengi */
+    border-top: 8px solid #3498db; /* İç çember rengi */
+    border-radius: 50%;
+    width: 60px; /* Spinner boyutu */
+    height: 60px; /* Spinner boyutu */
+    animation: spin 1s linear infinite; /* Dönme animasyonu */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
