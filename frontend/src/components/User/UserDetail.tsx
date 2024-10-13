@@ -4,7 +4,6 @@ import Loader from '../../components/Common/Loader';
 // import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-// User Interface
 interface User {
     id: number;
     name: string;

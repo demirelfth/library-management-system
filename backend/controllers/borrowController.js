@@ -134,12 +134,23 @@ exports.borrowedBook = async (req, res) => {
       return res.status(400).json({ message: 'Book not found' });
     }
 
+    const ratings = await Rating.findAll({
+      where: { BookId: book_id },
+      attributes: ['quantity']
+    });
+
+    const totalRating = ratings.reduce((sum, rating) => sum + rating.quantity, 0);
+    const averageRating = ratings.length > 0 ? totalRating / ratings.length : 0;
+
     const activeBorrow = await Borrow.findOne({
       where: { BookId: book_id, return_date: "" }
     });
 
     if (!activeBorrow) {
-      return res.status(200).json({ message: 'The book is available and not currently borrowed' });
+      return res.status(200).json({
+        message: 'The book is available and not currently borrowed',
+        averageRating: averageRating.toFixed(2)
+      });
     }
 
     const user = await User.findByPk(activeBorrow.UserId);
@@ -149,7 +160,8 @@ exports.borrowedBook = async (req, res) => {
 
     return res.status(200).json({
       message: 'The book is currently borrowed',
-      borrowedBy: user
+      borrowedBy: user,
+      averageRating: averageRating.toFixed(2)
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

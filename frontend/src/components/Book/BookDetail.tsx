@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { fetchBookById  }from '../../api/bookApi';
 import Loader from '../../components/Common/Loader';
-// import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-// Book Interface
 interface Book {
     id: number;
     title: string;
@@ -12,7 +10,11 @@ interface Book {
     year: number;
 }
 
-const UserDetail = () => {
+interface BookDetailProps {
+    rating: string | null;
+}
+
+const BookDetail: React.FC<BookDetailProps> = ({ rating }) => {
     const [book, setBook] = useState<Book>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -51,9 +53,10 @@ const UserDetail = () => {
                 <p>Title: &nbsp;&nbsp;&nbsp;&nbsp;  {book.title}</p>
                 <p>Author: &nbsp;                   {book.author}</p>
                 <p>Year: &nbsp;&nbsp;&nbsp;&nbsp;   {book.year}</p>
+                <p>Average Rating: &nbsp; {rating !== null ? rating : "No ratings yet"}</p>
             </section>
         </div>
     );
 };
   
-export default UserDetail;
+export default BookDetail;
