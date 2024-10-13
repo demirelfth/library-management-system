@@ -3,6 +3,7 @@ import { fetchUserById  } from '../../api/userApi';
 import Loader from '../../components/Common/Loader';
 // import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface User {
     id: number;
@@ -42,6 +43,7 @@ const UserDetail = () => {
   
     return (
         <div>
+            <Link to="/" style={{ textDecoration: 'none', textAlign: 'center'}}><h1>Library Management System</h1></Link>
             <header className="header">
                 <h2>User Details</h2>
             </header>

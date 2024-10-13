@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchBookById  }from '../../api/bookApi';
 import Loader from '../../components/Common/Loader';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface Book {
     id: number;
@@ -46,6 +47,7 @@ const BookDetail: React.FC<BookDetailProps> = ({ rating }) => {
   
     return (
         <div>
+            <Link to="/" style={{ textDecoration: 'none', textAlign: 'center'}}><h1>Library Management System</h1></Link>
             <header className="header">
                 <h2>Book Details</h2>
             </header>

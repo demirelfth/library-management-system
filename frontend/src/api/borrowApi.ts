@@ -45,7 +45,7 @@ export const fetchBorrowedBookStatus = async (id: number) => {
   return await response.json();
 };
 
-export const borrowBook = async (userId: number, bookId: number) => {
+export const borrowBook = async (bookId: number, userId: number) => {
   if (bookId) {
     try {
       const response = await fetch(`${API_URL}/users/${userId}/borrow/${bookId}`, {

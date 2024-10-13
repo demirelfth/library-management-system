@@ -7,11 +7,16 @@ sequelize.sync({ force: true }).then(async () => {
   
     // Added dummy book data
     await Book.bulkCreate([
-        { title: "Empati", author: 'Adam Fawer', year: 2007 },
+        { title: "Gnosis", author: 'Adam Fawer', year: 2007 },
         { title: "Improbable", author: 'Adam Fawer', year: 2005 },
-        { title: "Zirve", author: 'Robert Pool', year: 2018 },
+        { title: "Peak", author: 'Robert Pool', year: 2018 },
         { title: "The Art of Deception", author: 'Kevin Mitnick', year: 2001 },
         { title: "The Art of Intrusion", author: 'Kevin Mitnick', year: 2005 },
+        { title: "Leonardo Da Vinci", author: 'Walter Isaacson', year: 2007 },
+        { title: "The Code Breaker", author: 'Walter Isaacson', year: 2005 },
+        { title: "Steve Jobs", author: 'Walter Isaacson', year: 2018 },
+        { title: "Learn To Earn", author: 'Peter Lynch', year: 2001 },
+        { title: "Beating The Street", author: 'Peter Lynch', year: 2005 },
     ]);
     
     // Added dummy user data
@@ -21,13 +26,16 @@ sequelize.sync({ force: true }).then(async () => {
       { name: 'Zeynep', email: 'zeynep@gmail.com' },
       { name: 'Gamze', email: 'gamze@gmail.com' },
       { name: 'Gizem', email: 'gizem@gmail.com' },
+      { name: 'Kenan', email: 'kenan@gmail.com' },
+      { name: 'Pelin', email: 'pelin@gmail.com' },
+      { name: 'Umay', email: 'umay@gmail.com' },
     ]);
 
     // Added dummy borrow data
     await Borrow.bulkCreate([
-      { borrow_date: '09-07-2024', return_date: '24-07-2024', BookId: 1, UserId: 2 },
-      { borrow_date: '15-07-2024', return_date: '22-07-2024', BookId: 2, UserId: 3 },
-      { borrow_date: '12-07-2024', return_date: '21-07-2024', BookId: 3, UserId: 1 },
+      { borrow_date: 'Fri Oct 11 2024 23:46:40 GMT+0300 (GMT+03:00)', return_date: 'Fri Oct 11 2024 23:55:46 GMT+0300 (GMT+03:00)', BookId: 1, UserId: 2 },
+      { borrow_date: 'Fri Oct 11 2024 23:56:52 GMT+0300 (GMT+03:00)', return_date: 'Fri Oct 11 2024 23:57:11 GMT+0300 (GMT+03:00)', BookId: 2, UserId: 3 },
+      { borrow_date: 'Sun Oct 13 2024 00:36:34 GMT+0300 (GMT+03:00)', return_date: 'Sun Oct 13 2024 00:36:47 GMT+0300 (GMT+03:00)', BookId: 3, UserId: 1 },
     ]);
 
     // Added dummy rating data

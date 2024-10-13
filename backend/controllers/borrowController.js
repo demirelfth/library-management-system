@@ -135,12 +135,20 @@ exports.borrowedBook = async (req, res) => {
     }
 
     const ratings = await Rating.findAll({
-      where: { BookId: book_id },
-      attributes: ['quantity']
+      where: { BookId: book_id }
     });
-
-    const totalRating = ratings.reduce((sum, rating) => sum + rating.quantity, 0);
-    const averageRating = ratings.length > 0 ? totalRating / ratings.length : 0;
+    
+    let averageRating = 0;
+    if (ratings.length === 0) {
+        console.log('No ratings available.');
+    } else {
+        const totalRating = ratings.reduce((sum, rating) => {
+            const quantity = parseFloat(rating.quantity) || 0;
+            return sum + quantity;
+        }, 0);
+        
+        averageRating = totalRating / ratings.length;
+    }
 
     const activeBorrow = await Borrow.findOne({
       where: { BookId: book_id, return_date: "" }
